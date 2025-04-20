@@ -2,81 +2,14 @@
 <html>
 <head>
   <title>Google Sheet Viewer</title>
-  <style>
-    /* General reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #b0b0b0, #d6d6d6); /* Ash-colored gradient */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 3rem;
-      color: #333;
-      background: linear-gradient(135deg, #ff7eb3, #ff758c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 8px rgba(255, 117, 140, 0.2);
-    }
-
-    .iframe-container {
-      width: 100%;
-      max-width: 800px;
-      perspective: 1500px; /* Increased perspective for a stronger 3D effect */
-    }
-
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      transform: rotateX(10deg); /* Stronger tilt for 3D effect */
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    iframe:hover {
-      transform: rotateX(0deg);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
-    }
-
-    @media (max-width: 768px) {
-      iframe {
-        height: 400px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      iframe {
-        height: 300px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <div>
-    <h1>LIVE Sheet Data</h1>
-    <div class="iframe-container">
-      <iframe 
-        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRMGK_qeU1vwjp9zuk6S7tam1MArrV7Y2FMTZ1wjCehycc_vrECrNvtR-heOd0PyIUvsq5cGe9siq5s/pubhtml">
-      </iframe>
-    </div>
-  </div>
+  <h1>My Google Sheet</h1>
+  <iframe 
+    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRMGK_qeU1vwjp9zuk6S7tam1MArrV7Y2FMTZ1wjCehycc_vrECrNvtR-heOd0PyIUvsq5cGe9siq5s/pubhtml" 
+    width="100%" 
+    height="600"
+    frameborder="0">
+  </iframe>
 </body>
 </html>
