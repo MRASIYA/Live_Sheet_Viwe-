@@ -4,24 +4,151 @@
   <title>Google Sheet Viewer</title>
   <style>
     body {
-      background-color: black; /* Sets the page background color to black */
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
     }
+
     h1 {
       color: green;
-      text-shadow: 2px 2px 4px #000000; /* Creates a 3D effect */
-      font-family: Arial, sans-serif; /* Optional: Set a clean font */
-      background-color: #B2BEB5; /* Ash color */
-      padding: 10px; /* Optional: Add padding for better appearance */
+      text-shadow: 2px 2px 4px #000000;
+      background-color: #B2BEB5;
+      padding: 10px;
+    }
+
+    /* Popup Styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 2px solid #4caf50;
+      box-shadow: 4px 4px 8px #2e7d32, -4px -4px 8px #66bb6a;
+      border-radius: 10px;
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .popup h2 {
+      color: black; /* Set the font color to black */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a 3D shadow effect */
+      font-size: 24px; /* Adjust font size for better visibility */
+      font-weight: bold; /* Make the text bold */
+    }
+
+    .popup input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #4caf50;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      width: 100%; /* Ensure the input field is properly visible */
+      box-sizing: border-box;
+    }
+
+    .popup button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(145deg, #4caf50, #388e3c);
+      border: none;
+      border-radius: 5px;
+      box-shadow: 4px 4px 8px #2e7d32, -4px -4px 8px #66bb6a;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup button:hover {
+      box-shadow: 2px 2px 4px #2e7d32, -2px -2px 4px #66bb6a;
+      transform: translateY(-2px);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    #errorMessage {
+      color: red;
+      display: none;
+      font-size: 14px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <h1>ITEM Issues Viwe</h1>
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="popup">
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="Enter Password">
+    <p style="font-size: 14px; color: gray; margin-top: 5px;">Please enter the password to proceed.</p>
+    <span id="errorMessage">Incorrect Password!</span>
+    <br>
+    <button onclick="checkPassword()">Submit</button>
+  </div>
+
   <iframe 
+    id="contentFrame"
     src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRMGK_qeU1vwjp9zuk6S7tam1MArrV7Y2FMTZ1wjCehycc_vrECrNvtR-heOd0PyIUvsq5cGe9siq5s/pubhtml" 
     width="100%" 
     height="600"
-    frameborder="0">
+    frameborder="0"
+    style="display: none;">
   </iframe>
+
+  <script>
+    // Show the popup on page load
+    window.onload = function() {
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    };
+
+    // Check the password
+    function checkPassword() {
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+      if (password.toLowerCase() === 'rmc') { // Convert input to lowercase
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('contentFrame').style.display = 'block';
+      } else {
+        errorMessage.style.display = 'block'; // Show the error message
+        startCountdown();
+      }
+    }
+
+    // Countdown for retry
+    function startCountdown() {
+      const button = document.querySelector('.popup button');
+      let countdown = 10;
+
+      // Disable the button
+      button.disabled = true;
+      button.textContent = `Try Again in ${countdown}s`;
+
+      const interval = setInterval(() => {
+        countdown--;
+        button.textContent = `Try Again in ${countdown}s`;
+
+        if (countdown === 0) {
+          clearInterval(interval);
+          button.disabled = false;
+          button.textContent = 'Submit';
+        }
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
